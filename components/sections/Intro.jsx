@@ -15,7 +15,7 @@ const FADE_MASK = 'lg:[mask-image:linear-gradient(to_bottom,transparent_0%,#000_
 export default function Intro() {
   return (
     <section id="gioi-thieu" className="relative w-full pt-10 pb-2 lg:pt-16 lg:pb-28 overflow-hidden">
-      <div className="relative lg:grid lg:grid-cols-[minmax(0,min(34vw,560px))_1fr] items-center gap-4">
+      <div className="relative lg:grid lg:grid-cols-[minmax(0,min(calc(34vw/var(--z,1)),560px))_1fr] items-center gap-4">
         {/* Ảnh: tràn mép trái, có lớp xanh nhạt làm khung phía sau */}
         <div data-reveal="curtain" className="relative px-4 sm:px-6 lg:px-0">
           <OrganicFrame

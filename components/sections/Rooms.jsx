@@ -144,7 +144,7 @@ export default function Rooms() {
             <div
               data-reveal="photo"
               data-reveal-delay="200"
-              className="relative w-full aspect-[16/10] lg:aspect-auto lg:h-[clamp(300px,min(29vw,calc(100svh_-_340px)),440px)] rounded-[26px] overflow-hidden ring-4 ring-white shadow-[0_20px_40px_-24px_rgba(23,34,44,0.6)] bg-sand"
+              className="relative w-full aspect-[16/10] lg:aspect-auto lg:h-[clamp(300px,min(calc(29vw/var(--z,1)),calc(100svh/var(--z,1)_-_340px)),440px)] rounded-[26px] overflow-hidden ring-4 ring-white shadow-[0_20px_40px_-24px_rgba(23,34,44,0.6)] bg-sand"
             >
               <CrossfadeImage src={gallery[photoIdx]} alt={room.name} sizes="(min-width:1024px) 56vw, 100vw" />
               <span className="absolute z-10 left-4 top-4 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[11.5px] font-semibold text-ink">{room.type}</span>

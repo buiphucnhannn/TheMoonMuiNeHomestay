@@ -24,7 +24,9 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
     const prev = { overflow: html.style.overflow, bodyOverflow: document.body.style.overflow, paddingRight: document.body.style.paddingRight };
     html.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${scrollbar}px`;
+    // body nằm trong <html> đang zoom (app/layout.js) → chia --z để bù đúng bằng bề rộng thanh cuộn thật
+    const z = parseFloat(getComputedStyle(html).getPropertyValue('--z')) || 1;
+    document.body.style.paddingRight = `${scrollbar / z}px`;
     const onKey = (e) => {
       if (e.key === 'Escape') closeRef.current();
       if (e.key === 'ArrowRight') setIdx((i) => (i + 1) % room.photos.length);
@@ -50,7 +52,7 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6 bg-night/65 backdrop-blur-[3px] animate-fade-in overscroll-contain" onClick={onClose} role="presentation">
       <div
-        className="relative w-full max-w-5xl xl:max-w-6xl max-h-[calc(100svh-1.5rem)] sm:max-h-[calc(100svh-3rem)] overflow-y-auto overscroll-contain scrollbar-none bg-cream rounded-[28px] shadow-2xl border border-line"
+        className="relative w-full max-w-5xl xl:max-w-6xl max-h-[calc(100svh/var(--z,1)-1.5rem)] sm:max-h-[calc(100svh/var(--z,1)-3rem)] overflow-y-auto overscroll-contain scrollbar-none bg-cream rounded-[28px] shadow-2xl border border-line"
         role="dialog"
         aria-modal="true"
         aria-labelledby="room-detail-title"

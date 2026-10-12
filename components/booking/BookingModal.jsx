@@ -52,7 +52,9 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
     const prev = { overflow: html.style.overflow, bodyOverflow: document.body.style.overflow, paddingRight: document.body.style.paddingRight };
     html.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${scrollbar}px`;
+    // body nằm trong <html> đang zoom (app/layout.js) → chia --z để bù đúng bằng bề rộng thanh cuộn thật
+    const z = parseFloat(getComputedStyle(html).getPropertyValue('--z')) || 1;
+    document.body.style.paddingRight = `${scrollbar / z}px`;
     const onKey = (e) => e.key === 'Escape' && closeRef.current();
     window.addEventListener('keydown', onKey);
     return () => {
@@ -113,7 +115,7 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
     >
       {/* Vừa 1 màn hình; ẩn thanh cuộn nhưng vẫn lăn/vuốt được nếu ô ghi chú bị kéo giãn */}
       <div
-        className="relative w-full max-w-xl md:max-w-[880px] max-h-[calc(100svh-1.5rem)] sm:max-h-[calc(100svh-3rem)] overflow-y-auto overscroll-contain scrollbar-none bg-cream rounded-[28px] shadow-2xl border border-line md:grid md:grid-cols-[300px_minmax(0,1fr)]"
+        className="relative w-full max-w-xl md:max-w-[880px] max-h-[calc(100svh/var(--z,1)-1.5rem)] sm:max-h-[calc(100svh/var(--z,1)-3rem)] overflow-y-auto overscroll-contain scrollbar-none bg-cream rounded-[28px] shadow-2xl border border-line md:grid md:grid-cols-[300px_minmax(0,1fr)]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="booking-title"

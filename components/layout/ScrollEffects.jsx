@@ -18,7 +18,9 @@ export default function ScrollEffects() {
     // - Không đụng phần tử đang ẩn (display:none theo breakpoint).
     const check = () => {
       const vh = window.innerHeight;
-      const trigger = Math.min(80, vh * 0.08);
+      // --z: hệ số phóng trang khi khung nhìn rộng hơn bản thiết kế (app/layout.js)
+      const z = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
+      const trigger = Math.min(80 * z, vh * 0.08);
       const atBottom = window.scrollY + vh >= document.documentElement.scrollHeight - 4;
       document.querySelectorAll('[data-reveal]').forEach((el) => {
         const r = el.getBoundingClientRect();
