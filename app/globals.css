@@ -1,26 +1,459 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =====================================================================
+   THEME — The Moon Homestay (Mũi Né & Phan Thiết)
+   Bảng màu lấy từ logo (xanh biển + vàng trăng + kem) và ảnh thật
+   (tường be, hồ bơi ngọc, hoa giấy hồng, lá chuối xanh).
+   ===================================================================== */
+@theme {
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-script: var(--font-script), cursive;
+
+  --color-cream: #fbf8f3;
+  --color-warm: #f6efe5;
+  --color-sand: #efe4d3;
+  --color-sky: #e6f5f9;
+  --color-sky-deep: #cdebf3;
+  --color-moon: #14b5d9;
+  --color-moon-deep: #0e93b3;
+  --color-moon-ink: #0b5f75;
+  --color-moon-soft: #a7e0ee;
+  --color-gold: #c9a063;
+  --color-gold-deep: #a8824b;
+  --color-coral: #e8865f;
+  --color-coral-deep: #d06a43;
+  --color-peach: #f6d8c4;
+  --color-blossom: #e85ba3;
+  --color-leaf: #7fa66b;
+  --color-ink: #17222c;
+  --color-muted: #5f6c76;
+  --color-line: #e7dfd3;
+  --color-night: #0f1c26;
+  --color-night-soft: #16283a;
+
+  --shadow-soft: 0 18px 40px -24px rgba(23, 34, 44, 0.35);
+  --shadow-card: 0 14px 34px -22px rgba(23, 34, 44, 0.45);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Cuộn mượt xử lý bằng JS (lib/smoothScroll.js) để kiểm soát tốc độ & vị trí dừng */
+html {
+  scroll-behavior: auto;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+  font-variant-numeric: lining-nums;
+}
+.font-script {
+  font-family: var(--font-script);
+}
+
+/* ---------- Nút dùng chung ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.8rem 1.6rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    border-color 0.25s,
+    transform 0.25s,
+    box-shadow 0.25s;
+  white-space: nowrap;
+}
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+.btn-primary {
+  background: var(--color-moon);
+  color: #fff;
+  box-shadow: 0 10px 24px -12px rgba(20, 181, 217, 0.9);
+}
+.btn-primary:hover {
+  background: var(--color-moon-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -12px rgba(20, 181, 217, 1);
+}
+.btn-dark {
+  background: var(--color-ink);
+  color: #fff;
+  box-shadow: 0 10px 24px -14px rgba(23, 34, 44, 0.8);
+}
+.btn-dark:hover {
+  background: var(--color-night-soft);
+  transform: translateY(-2px);
+}
+.btn-coral {
+  background: var(--color-coral);
+  color: #fff;
+  box-shadow: 0 10px 24px -12px rgba(232, 134, 95, 0.9);
+}
+.btn-coral:hover {
+  background: var(--color-coral-deep);
+  transform: translateY(-2px);
+}
+.btn-outline {
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--color-ink);
+  border: 1.5px solid rgba(23, 34, 44, 0.75);
+}
+.btn-outline:hover {
+  border-color: var(--color-moon-deep);
+  color: var(--color-moon-deep);
+  transform: translateY(-2px);
+}
+.btn-ghost-light {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
+}
+.btn-ghost-light:hover {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  transform: translateY(-2px);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-moon-deep);
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 2px;
+  transition:
+    gap 0.25s,
+    color 0.25s;
+}
+.link-arrow:hover {
+  gap: 0.8rem;
+  color: var(--color-moon-ink);
+}
+
+/* ---------- Thẻ / nhãn ---------- */
+.card-soft {
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(231, 223, 211, 0.95);
+  box-shadow: var(--shadow-card);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-sky);
+  color: var(--color-moon-ink);
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-moon-deep);
+}
+@media (min-width: 640px) {
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.26em;
+  }
+}
+.eyebrow::before {
+  content: "";
+  width: 1.6rem;
+  height: 1.5px;
+  background: var(--color-gold);
+  border-radius: 9999px;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Chỉ hiện ảnh sau khi tải xong để không nháy nền xám */
+img {
+  background-color: transparent;
+}
+
+/* ---------- Hoạt ảnh nhẹ ---------- */
+@keyframes floatGentle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.animate-float {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+@keyframes swayLeaf {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  50% {
+    rotate: 3deg;
+  }
+}
+.animate-sway {
+  transform-origin: bottom left;
+  animation: swayLeaf 6s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.75);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+.animate-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: twinkle 2.8s ease-in-out infinite;
+}
+
+@keyframes driftRing {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(6px, -5px) rotate(6deg);
+  }
+}
+.animate-drift {
+  animation: driftRing 7s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+.text-shimmer {
+  background: linear-gradient(90deg, var(--color-moon-deep), var(--color-moon), var(--color-gold), var(--color-moon-deep));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-sway,
+  .animate-twinkle,
+  .animate-drift,
+  .text-shimmer {
+    animation: none;
+  }
+}
+
+/* =====================================================================
+   HIỆU ỨNG XUẤT HIỆN KHI CUỘN (2 chiều) — điều khiển bởi ScrollEffects.jsx
+   data-reveal="<kiểu>"  +  data-reveal-delay="<ms>" (tuỳ chọn)
+   ===================================================================== */
+[data-reveal] {
+  --rv-dur: 900ms;
+  --rv-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --rv-delay-now: 0ms;
+  opacity: 0;
+  transition:
+    opacity var(--rv-dur) var(--rv-ease) var(--rv-delay-now),
+    transform var(--rv-dur) var(--rv-ease) var(--rv-delay-now),
+    filter var(--rv-dur) var(--rv-ease) var(--rv-delay-now),
+    clip-path var(--rv-dur) var(--rv-ease) var(--rv-delay-now),
+    translate 0.3s ease,
+    scale 0.3s ease,
+    rotate 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+[data-reveal].is-revealed {
+  --rv-delay-now: var(--reveal-delay, 0ms);
+  opacity: 1;
+  transform: none;
+  filter: none;
+  clip-path: inset(0 0 0 0 round 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    clip-path: none;
+    transition: none;
+  }
+}
+
+/* Mặc định: trôi lên nhẹ */
+[data-reveal="up"] {
+  transform: translateY(26px);
+}
+[data-reveal="left"] {
+  transform: translateX(-40px);
+}
+[data-reveal="right"] {
+  transform: translateX(40px);
+}
+[data-reveal="zoom"] {
+  transform: scale(0.92);
+  filter: blur(6px);
+}
+
+/* Hero — chữ hiện dần từ mờ nhoè, ảnh trôi vào từ phải */
+[data-reveal="hero-text"] {
+  transform: translateY(28px);
+  filter: blur(8px);
+  --rv-dur: 1000ms;
+}
+[data-reveal="hero-image"] {
+  transform: translateX(60px) scale(1.04);
+  --rv-dur: 1300ms;
+}
+
+/* Giới thiệu — ảnh mở như tấm rèm, thẻ "viên sỏi" nảy lên */
+[data-reveal="curtain"] {
+  opacity: 0.15;
+  clip-path: inset(0 100% 0 0 round 0);
+  --rv-dur: 1300ms;
+}
+[data-reveal="pebble"] {
+  transform: translateY(40px) scale(0.8);
+  --rv-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --rv-dur: 800ms;
+}
+[data-reveal="note"] {
+  transform: translateY(-16px) rotate(-4deg);
+  filter: blur(4px);
+}
+
+/* Phòng — tiêu đề rơi xuống, ảnh lớn thu về từ cận cảnh, 2 cột trượt vào */
+[data-reveal="drop"] {
+  transform: translateY(-30px);
+}
+[data-reveal="photo"] {
+  transform: scale(1.08);
+  filter: blur(10px);
+  --rv-dur: 1200ms;
+}
+
+/* Bảng giá — thẻ lật từ dưới lên như lá bài */
+[data-reveal="flip"] {
+  transform: perspective(900px) rotateX(55deg) translateY(30px);
+  transform-origin: 50% 100%;
+  --rv-dur: 850ms;
+}
+[data-reveal="grow-x"] {
+  transform: scaleX(0.4);
+  transform-origin: 0 50%;
+}
+
+/* Tiện nghi — dải nền mở rộng, thẻ trồi lên có nảy nhẹ */
+[data-reveal="band"] {
+  transform: scaleX(0.85);
+  --rv-dur: 1100ms;
+}
+[data-reveal="bounce-up"] {
+  transform: translateY(70px);
+  --rv-ease: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --rv-dur: 950ms;
+}
+[data-reveal="chip"] {
+  transform: translateY(18px) scale(0.9);
+  --rv-dur: 700ms;
+}
+
+/* Thư viện — ảnh nở ra */
+[data-reveal="tile"] {
+  transform: scale(0.88) translateY(20px);
+  --rv-dur: 900ms;
+}
+
+/* Bản đồ hiện rõ dần như in mực */
+[data-reveal="map"] {
+  transform: scale(0.94) rotate(-1.5deg);
+  filter: blur(12px) saturate(0.4);
+  --rv-dur: 1300ms;
+}
+
+/* Banner tối — chữ bay vào từ 2 phía */
+[data-reveal="banner-left"] {
+  transform: translateX(-60px);
+  filter: blur(6px);
+}
+[data-reveal="banner-right"] {
+  transform: translateX(60px) rotate(3deg);
+  filter: blur(6px);
+}
+
+/* Thẻ xoè như quạt bài */
+[data-reveal="fan-l"] {
+  transform: translateY(50px) rotate(-7deg);
+  transform-origin: 50% 120%;
+}
+[data-reveal="fan-r"] {
+  transform: translateY(50px) rotate(7deg);
+  transform-origin: 50% 120%;
+}
+
+/* Hoạ tiết trang trí — nở nhẹ */
+[data-reveal="decor"] {
+  transform: translateY(14px) scale(0.96);
+  --rv-dur: 1200ms;
 }
