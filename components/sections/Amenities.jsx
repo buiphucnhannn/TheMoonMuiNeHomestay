@@ -8,7 +8,7 @@ const BADGE_COLORS = ['#0E93B3', '#D06A43', '#D9488F', '#B88A3E'];
 
 export default function Amenities() {
   return (
-    <section id="tien-nghi" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
+    <section id="tien-nghi" className="relative w-full pt-12 pb-14 lg:pt-16 lg:pb-28 overflow-hidden">
       <Leaf className="hidden lg:block absolute -left-4 top-2 w-20 opacity-80 animate-sway" />
       <Sun className="hidden xl:block absolute right-[4%] top-[6%] w-12 opacity-80 animate-float" />
 
@@ -22,7 +22,7 @@ export default function Amenities() {
               <br />
               <span className="font-script font-medium text-moon-deep text-[46px] sm:text-[54px] leading-[1.05]">bạn chỉ việc chill</span>
             </h2>
-            <p className="mt-4 mb-7 text-[15px] text-muted max-w-[270px] leading-relaxed">Những điều nhỏ được chăm chút để kỳ nghỉ của bạn thật nhẹ đầu.</p>
+            <p className="mt-4 mb-7 text-[15px] text-muted max-w-[270px] leading-relaxed text-justify">Những điều nhỏ được chăm chút để kỳ nghỉ của bạn thật nhẹ đầu.</p>
             <BookingButton>Đặt phòng ngay</BookingButton>
             <p className="hidden lg:block absolute right-0 -top-9 font-script text-[22px] leading-none text-muted rotate-[-10deg]">
               Good vibes
@@ -71,23 +71,23 @@ export default function Amenities() {
         {/* Danh sách tiện nghi */}
         <div className="mt-16 lg:mt-20">
           <div data-reveal="up" className="flex items-end justify-between gap-4 mb-6">
-            <h3 className="font-serif text-[26px] sm:text-[30px] text-ink">Đầy đủ như ở nhà, chill hơn ở nhà</h3>
+            <h3 className="font-serif text-[26px] sm:text-[30px] text-ink text-balance">Đầy đủ như ở nhà, chill hơn ở nhà</h3>
             <Sparkles className="hidden sm:block w-16 opacity-80" />
           </div>
-          <ul className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
+          <ul className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-3.5">
             {amenities.map((a, i) => (
               <li
                 data-reveal="chip"
                 data-reveal-delay={(i % 4) * 90}
                 key={a.title}
-                className="group flex items-start gap-3.5 rounded-[22px] bg-white/80 p-4 ring-1 ring-white shadow-[0_12px_28px_-22px_rgba(23,34,44,0.5)] transition-all duration-300 hover:-translate-y-1 hover:bg-white"
+                className="group flex max-sm:flex-col items-start gap-2.5 sm:gap-3.5 rounded-[20px] sm:rounded-[22px] bg-white/80 p-3.5 sm:p-4 ring-1 ring-white shadow-[0_12px_28px_-22px_rgba(23,34,44,0.5)] transition-all duration-300 hover:-translate-y-1 hover:bg-white"
               >
-                <span className="w-11 h-11 shrink-0 rounded-2xl bg-sky text-moon-deep flex items-center justify-center transition-transform group-hover:scale-110 group-hover:bg-moon group-hover:text-white">
+                <span className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-2xl bg-sky text-moon-deep flex items-center justify-center transition-transform group-hover:scale-110 group-hover:bg-moon group-hover:text-white">
                   <Icon name={a.icon} className="w-5.5 h-5.5" strokeWidth={1.6} />
                 </span>
                 <div>
                   <p className="font-semibold text-[14.5px] text-ink leading-snug">{a.title}</p>
-                  <p className="text-[12.5px] text-muted mt-0.5 leading-snug">{a.desc}</p>
+                  <p className="text-[11.5px] sm:text-[12.5px] text-muted mt-0.5 leading-snug">{a.desc}</p>
                 </div>
               </li>
             ))}

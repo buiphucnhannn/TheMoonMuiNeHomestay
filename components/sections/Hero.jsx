@@ -20,6 +20,7 @@ const MASK_STYLE = {
 };
 
 export default function Hero() {
+  const [badgeBrand, badgePlace] = heroData.badge.split(' • ');
   return (
     <section id="trang-chu" className="relative w-full overflow-hidden bg-cream lg:h-[100svh] lg:min-h-[660px]">
       {/* Quầng sáng xanh nhạt phía sau chữ */}
@@ -62,7 +63,16 @@ export default function Hero() {
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 h-full flex items-center pt-28 pb-8 lg:pt-[88px] lg:pb-[40px]">
         <div className="w-full lg:w-[48%] xl:w-[45%]">
           <p data-reveal="hero-text" data-reveal-delay="100" className="eyebrow mb-[clamp(14px,2.4vh,24px)]">
-            {heroData.badge}
+            {/* Mobile: ngắt đúng chỗ dấu "•" thành 2 dòng gọn thay vì rớt 1 chữ */}
+            <span>
+              {badgeBrand}
+              {badgePlace && (
+                <>
+                  <span className="max-sm:hidden"> • </span>
+                  <span className="max-sm:block">{badgePlace}</span>
+                </>
+              )}
+            </span>
           </p>
 
           <h1
@@ -71,7 +81,7 @@ export default function Hero() {
             className="font-serif text-[40px] sm:text-[56px] lg:text-[clamp(44px,min(7.4vh,4.8vw),72px)] leading-[1.08] text-ink tracking-tight"
           >
             {heroData.titleLine1}
-            <span className="block font-script font-medium text-moon-deep text-[44px] sm:text-[66px] lg:text-[clamp(50px,min(8.4vh,5.4vw),84px)] leading-[1.05] mt-1 whitespace-nowrap">
+            <span className="block font-script font-medium text-moon-deep text-[clamp(34px,10.6vw,44px)] sm:text-[66px] lg:text-[clamp(50px,min(8.4vh,5.4vw),84px)] leading-[1.05] mt-1 whitespace-nowrap">
               {heroData.scriptLine}
             </span>
           </h1>
@@ -79,7 +89,7 @@ export default function Hero() {
           <p
             data-reveal="hero-text"
             data-reveal-delay="380"
-            className="mt-[clamp(14px,2.4vh,22px)] text-[16px] sm:text-[17px] lg:text-[clamp(16px,2.3vh,19px)] text-muted leading-relaxed max-w-[560px] text-balance"
+            className="mt-[clamp(14px,2.4vh,22px)] text-[16px] sm:text-[17px] lg:text-[clamp(16px,2.3vh,19px)] text-muted leading-relaxed max-w-[560px] text-justify"
           >
             {heroData.desc}
           </p>
@@ -96,7 +106,7 @@ export default function Hero() {
       </div>
 
       {/* Ảnh — mobile/tablet */}
-      <div data-reveal="hero-image" data-reveal-delay="300" className="lg:hidden relative z-10 px-4 sm:px-6 pb-20">
+      <div data-reveal="hero-image" data-reveal-delay="300" className="lg:hidden relative z-10 px-4 sm:px-6 pb-16">
         <OrganicFrame
           edges={{ top: { amp: 0.025, periods: 1.5, inset: 0.03 }, bottom: { amp: 0.025, periods: 1.5, phase: Math.PI, inset: 0.03 } }}
           className="relative w-full aspect-[4/3] rounded-[28px] overflow-hidden shadow-md"

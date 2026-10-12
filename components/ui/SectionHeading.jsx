@@ -20,7 +20,7 @@ export default function SectionHeading({ eyebrow, title, script, desc, align = '
           </>
         ) : null}
       </h2>
-      {desc ? <p className={cn('mt-4 text-[15px] sm:text-[16px] leading-relaxed text-pretty', dark ? 'text-white/75' : 'text-muted', center && 'mx-auto max-w-xl')}>{desc}</p> : null}
+      {desc ? <p className={cn('mt-4 text-[15px] sm:text-[16px] leading-relaxed text-pretty', dark ? 'text-white/75' : 'text-muted', center ? 'mx-auto max-w-xl' : 'text-justify')}>{desc}</p> : null}
     </div>
   );
 }

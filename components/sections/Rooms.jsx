@@ -87,7 +87,7 @@ export default function Rooms() {
   ];
 
   return (
-    <section id="phong" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
+    <section id="phong" className="relative w-full pt-12 pb-14 lg:pt-16 lg:pb-28 overflow-hidden">
       <Leaf className="hidden lg:block absolute -left-5 top-4 w-20 opacity-80 animate-sway" />
       <Sparkles className="hidden 2xl:block absolute right-[2%] top-[10%] w-16 opacity-70" />
       <Blossom className="hidden 2xl:block absolute right-[1.6%] top-[46%] w-6 opacity-70" />
@@ -101,7 +101,7 @@ export default function Rooms() {
               Khám phá
               <span className="font-script font-medium text-moon-deep text-[46px] sm:text-[56px] ml-3">các phòng</span>
             </h2>
-            <p className="mt-2 text-[14.5px] text-muted">Mỗi căn phòng một tâm trạng — bạn thích biển Mũi Né hay hồ bơi Phan Thiết?</p>
+            <p className="mt-2 text-[14.5px] text-muted text-justify lg:text-left">Mỗi căn phòng một tâm trạng — bạn thích biển Mũi Né hay hồ bơi Phan Thiết?</p>
           </div>
           <div className="inline-flex self-start lg:self-auto rounded-full card-soft p-1.5 gap-1">
             {FILTERS.map((f) => (
@@ -221,7 +221,7 @@ export default function Rooms() {
                     </span>
                   ))}
                 </div>
-                <p className="text-[14px] text-muted leading-relaxed lg:line-clamp-3">{room.desc}</p>
+                <p className="text-[14px] text-muted leading-relaxed text-justify lg:line-clamp-3">{room.desc}</p>
               </div>
 
               <div>

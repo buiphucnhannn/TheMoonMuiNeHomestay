@@ -13,7 +13,7 @@ const ICON_BG = {
 
 export default function Pricing() {
   return (
-    <section id="bang-gia" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
+    <section id="bang-gia" className="relative w-full pt-12 pb-14 lg:pt-16 lg:pb-28 overflow-hidden">
       <Leaf className="hidden 2xl:block absolute -right-4 top-10 w-20 opacity-80 animate-sway" flip />
       <PoolRing className="hidden lg:block absolute left-[3%] top-[5%] w-12 animate-drift" color="#7ED8E6" />
 
@@ -26,7 +26,7 @@ export default function Pricing() {
               <br />
               <span className="font-script font-medium text-moon-deep text-[46px] sm:text-[54px] leading-[1.05]">tuỳ bạn chọn</span>
             </h2>
-            <p className="mt-4 text-[15px] text-muted max-w-[280px] leading-relaxed">Nghỉ ngắn vài giờ, ở trọn ngày hay qua đêm — giá rõ ràng, không phí ẩn.</p>
+            <p className="mt-4 text-[15px] text-muted max-w-[280px] leading-relaxed text-justify">Nghỉ ngắn vài giờ, ở trọn ngày hay qua đêm — giá rõ ràng, không phí ẩn.</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <BookingButton pkg="night">Đặt phòng</BookingButton>
               <a href={siteConfig.zaloUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
@@ -36,8 +36,10 @@ export default function Pricing() {
             <Sparkles className="hidden lg:block absolute -right-2 -top-10 w-16 opacity-80" />
           </div>
 
-          {/* Subgrid: icon / tiêu đề / bảng giá / nút của các thẻ luôn nằm cùng hàng với nhau */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          {/* Subgrid: icon / tiêu đề / bảng giá / nút của các thẻ luôn nằm cùng hàng với nhau.
+              Mobile: dải thẻ vuốt ngang (snap), ló một phần thẻ kế bên để gợi ý vuốt */}
+          <div>
+          <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-px-4 -mx-4 px-4 pt-4 pb-6 scrollbar-none sm:grid sm:grid-cols-2 xl:grid-cols-4 sm:gap-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pt-0 sm:pb-0">
             {pricingPackages.map((pkg, i) => (
               <div
                 data-reveal="flip"
@@ -45,6 +47,7 @@ export default function Pricing() {
                 key={pkg.id}
                 className={cn(
                   'group relative card-soft rounded-[28px] px-5 pt-6 pb-5 grid grid-rows-subgrid row-span-4 gap-0 transition-all duration-300 hover:-translate-y-1.5',
+                  'max-sm:w-[78%] max-sm:shrink-0 max-sm:snap-center max-sm:grid-rows-[auto_auto_1fr_auto]',
                   pkg.featured && 'ring-2 ring-moon/50 bg-white'
                 )}
               >
@@ -95,9 +98,11 @@ export default function Pricing() {
               </div>
             ))}
           </div>
+          <p className="sm:hidden -mt-2 text-center text-[12px] text-muted">Vuốt ngang để xem các gói khác →</p>
+          </div>
         </div>
 
-        <div data-reveal="grow-x" data-reveal-delay="500" className="mt-7 lg:ml-[348px] xl:ml-[388px] rounded-[22px] sm:rounded-full bg-warm border border-line px-6 py-3 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-5 gap-y-1 text-center text-[12.5px] text-muted">
+        <div data-reveal="grow-x" data-reveal-delay="500" className="mt-7 lg:ml-[348px] xl:ml-[388px] rounded-[22px] sm:rounded-full bg-warm border border-line px-6 py-3 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-5 gap-y-1 text-center text-[12.5px] text-muted text-balance">
           {priceNotes.map((n, i) => (
             <span key={n} className="inline-flex items-center gap-5">
               {i > 0 && <span className="hidden sm:block w-1 h-1 rounded-full bg-gold" />}

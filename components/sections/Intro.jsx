@@ -14,7 +14,7 @@ const FADE_MASK = 'lg:[mask-image:linear-gradient(to_bottom,transparent_0%,#000_
 
 export default function Intro() {
   return (
-    <section id="gioi-thieu" className="relative w-full pt-10 pb-4 lg:pt-16 lg:pb-28 overflow-hidden">
+    <section id="gioi-thieu" className="relative w-full pt-10 pb-2 lg:pt-16 lg:pb-28 overflow-hidden">
       <div className="relative lg:grid lg:grid-cols-[minmax(0,min(34vw,560px))_1fr] items-center gap-4">
         {/* Ảnh: tràn mép trái, có lớp xanh nhạt làm khung phía sau */}
         <div data-reveal="curtain" className="relative px-4 sm:px-6 lg:px-0">
@@ -49,9 +49,9 @@ export default function Intro() {
               <h2 data-reveal="left" data-reveal-delay="120" className="font-serif text-[36px] sm:text-[44px] xl:text-[40px] 2xl:text-[44px] leading-[1.1] text-ink mb-5 tracking-tight">
                 {introData.titleSerif}
                 <br />
-                <span className="font-script font-medium text-moon-deep text-[44px] sm:text-[54px] xl:text-[44px] 2xl:text-[52px] leading-[1.05] whitespace-nowrap">{introData.titleScript}</span>
+                <span className="font-script font-medium text-moon-deep text-[clamp(34px,10.6vw,44px)] sm:text-[54px] xl:text-[44px] 2xl:text-[52px] leading-[1.05] sm:whitespace-nowrap">{introData.titleScript}</span>
               </h2>
-              <div data-reveal="left" data-reveal-delay="240" className="space-y-3 text-[15.5px] text-muted leading-relaxed mb-7 text-pretty">
+              <div data-reveal="left" data-reveal-delay="240" className="space-y-3 text-[15.5px] text-muted leading-relaxed mb-7 text-pretty text-justify">
                 {introData.paragraphs.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
@@ -72,7 +72,7 @@ export default function Intro() {
                 <Sparkles className="absolute -right-16 -top-7 w-14" />
               </div>
 
-              <div className="relative grid grid-cols-3 gap-3 sm:gap-4 2xl:gap-5 pb-12">
+              <div className="relative grid grid-cols-3 gap-3 sm:gap-4 2xl:gap-5 pb-8 lg:pb-12">
                 {introData.features.map((f, i) => (
                   <div
                     data-reveal="pebble"

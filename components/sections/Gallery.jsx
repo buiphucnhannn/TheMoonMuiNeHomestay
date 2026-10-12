@@ -7,6 +7,9 @@ import Icon from '@/components/ui/Icon';
 import { Blossom, BlossomBranch, Crescent, DecorRow, Leaf, PoolRing, Sparkles } from '@/components/ui/Organic';
 import { galleryImages } from '@/data/site';
 
+// Số ảnh hiện sẵn trên mobile (2 cột): 8 ảnh đầu xếp vừa 5 hàng kín
+const MOBILE_LIMIT = 8;
+
 function Lightbox({ index, onClose, onStep }) {
   const img = galleryImages[index];
   return (
@@ -47,6 +50,7 @@ function Lightbox({ index, onClose, onStep }) {
 
 export default function Gallery() {
   const [index, setIndex] = useState(-1);
+  const [showAll, setShowAll] = useState(false);
   const step = useCallback((d) => setIndex((i) => (i + d + galleryImages.length) % galleryImages.length), []);
   const close = useCallback(() => setIndex(-1), []);
 
@@ -68,7 +72,7 @@ export default function Gallery() {
   }, [index, step, close]);
 
   return (
-    <section id="hinh-anh" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
+    <section id="hinh-anh" className="relative w-full pt-12 pb-14 lg:pt-16 lg:pb-28 overflow-hidden">
       <Leaf className="hidden 2xl:block absolute -right-5 top-[30%] w-20 opacity-80 animate-sway" flip />
 
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
@@ -106,7 +110,7 @@ export default function Gallery() {
               type="button"
               onClick={() => setIndex(i)}
               aria-label={`Xem ảnh: ${img.alt}`}
-              className={`group relative overflow-hidden rounded-[22px] ring-1 ring-white shadow-[0_14px_30px_-22px_rgba(23,34,44,0.55)] cursor-pointer bg-sand ${img.span === 'wide' ? 'col-span-2' : ''} ${img.span === 'tall' ? 'md:row-span-2' : ''}`}
+              className={`group relative overflow-hidden rounded-[22px] ring-1 ring-white shadow-[0_14px_30px_-22px_rgba(23,34,44,0.55)] cursor-pointer bg-sand ${img.span === 'wide' ? 'col-span-2' : ''} ${img.span === 'tall' ? 'md:row-span-2' : ''} ${!showAll && i >= MOBILE_LIMIT ? 'max-md:hidden' : ''}`}
             >
               <Image src={img.src} alt={img.alt} fill sizes={img.span === 'wide' ? '(min-width:768px) 50vw, 100vw' : '(min-width:768px) 25vw, 50vw'} className="object-cover transition-transform duration-700 group-hover:scale-105" />
               <span className="absolute inset-0 bg-gradient-to-t from-night/55 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -119,6 +123,15 @@ export default function Gallery() {
             </button>
           ))}
         </div>
+
+        {/* Mobile: 8 ảnh đầu vừa 5 hàng kín, phần còn lại mở bằng nút */}
+        {!showAll && galleryImages.length > MOBILE_LIMIT && (
+          <div className="md:hidden mt-6 text-center">
+            <button type="button" onClick={() => setShowAll(true)} className="btn btn-outline">
+              Xem thêm {galleryImages.length - MOBILE_LIMIT} ảnh <Icon name="chevron-right" className="w-4 h-4 rotate-90" />
+            </button>
+          </div>
+        )}
       </div>
 
       <DecorRow variant="e" />

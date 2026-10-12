@@ -296,15 +296,8 @@ img {
   animation: shimmer 7s linear infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-float,
-  .animate-sway,
-  .animate-twinkle,
-  .animate-drift,
-  .text-shimmer {
-    animation: none;
-  }
-}
+/* Không tắt theo prefers-reduced-motion: Windows tắt "Animation effects" (rất phổ biến) khiến Chrome
+   báo "reduce" → khách không thấy hiệu ứng nào. Giữ hiệu ứng cho mọi người, giống BanMuongXanh. */
 
 /* =====================================================================
    HIỆU ỨNG XUẤT HIỆN KHI CUỘN (2 chiều) — điều khiển bởi ScrollEffects.jsx
@@ -333,15 +326,6 @@ img {
   opacity: 1;
   transform: none;
   filter: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-    filter: none;
-    clip-path: none;
-    transition: none;
-  }
 }
 
 /* Mặc định: trôi lên nhẹ */

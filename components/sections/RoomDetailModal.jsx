@@ -111,7 +111,7 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
                 <Icon name="map-pin" className="w-4 h-4 text-coral" /> {branch.addressShort}
               </li>
             </ul>
-            <p className="mt-3 text-[14px] text-muted leading-relaxed">{room.desc}</p>
+            <p className="mt-3 text-[14px] text-muted leading-relaxed text-justify">{room.desc}</p>
 
             <p className="mt-4 text-[12px] font-bold tracking-[0.2em] uppercase text-moon-deep">Tiện nghi trong phòng</p>
             <ul className="mt-2 grid sm:grid-cols-2 gap-x-4 gap-y-1 text-[13px] text-ink/85">

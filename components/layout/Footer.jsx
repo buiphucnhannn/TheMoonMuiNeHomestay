@@ -12,18 +12,19 @@ const FOOTER_BLURB = 'Homestay nhỏ xinh ở Mũi Né & Phan Thiết — ở th
 
 export default function Footer() {
   return (
-    <footer className="relative w-full bg-night text-[#DCE6EC] pt-16 pb-24 sm:pb-0 overflow-hidden">
+    <footer className="relative w-full bg-night text-[#DCE6EC] pt-16 pb-3 sm:pb-0 overflow-hidden">
       <Crescent className="absolute right-[4%] top-8 w-28 opacity-30 hidden md:block" color="#C9A063" />
       <div className="absolute -left-20 bottom-10 w-72 h-72 rounded-full bg-moon/10 blur-3xl pointer-events-none" />
 
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr_1fr_1fr] pt-4">
-          <div data-reveal="footer-col" data-reveal-delay="0">
+        {/* Mobile: 2 cột — Khám phá | Liên hệ cạnh nhau, 2 cơ sở xuống cuối cả hàng */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:gap-8 lg:grid-cols-[1.2fr_0.8fr_1fr_1fr] pt-4">
+          <div data-reveal="footer-col" data-reveal-delay="0" className="col-span-2 lg:col-span-1">
             <a href="#trang-chu" className="inline-flex items-center rounded-2xl bg-cream px-4 py-3 ring-1 ring-white/10">
               <Image src="/images/brand/wordmark-640.png" alt="The Moon Muine Homestay" width={640} height={365} className="h-11 w-auto" />
             </a>
             <p className="mt-3 font-script text-[24px] text-moon-soft leading-tight">{siteConfig.tagline}</p>
-            <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-[#A9B8C2]">{FOOTER_BLURB}</p>
+            <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-justify text-[#A9B8C2]">{FOOTER_BLURB}</p>
           </div>
 
           <div data-reveal="footer-col" data-reveal-delay="120">
@@ -39,7 +40,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div data-reveal="footer-col" data-reveal-delay="240">
+          <div data-reveal="footer-col" data-reveal-delay="240" className="col-span-2 lg:col-span-1 max-lg:order-last">
             <p className="mb-4 text-[12px] font-bold tracking-[0.22em] uppercase text-moon-soft">2 cơ sở</p>
             <ul className="space-y-4 text-[14px]">
               {branches.map((b) => (
@@ -73,17 +74,24 @@ export default function Footer() {
                 </a>
               </li>
               <li className="text-[#A9B8C2]">
-                Nhận phòng {siteConfig.checkin} · Trả phòng {siteConfig.checkout}
+                Nhận phòng {siteConfig.checkin}
+                <span className="max-lg:hidden"> · </span>
+                <span className="max-lg:block">Trả phòng {siteConfig.checkout}</span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* ScrollEffects tự hiện phần tử khi đã cuộn chạm đáy trang → dòng sát đáy vẫn reveal được */}
-        <div data-reveal="footer-line" data-reveal-delay="200" className="mt-9 border-t border-white/10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[13px] text-[#8FA0AC]">
-          <p>© {YEAR} The Moon Homestay · Mũi Né & Phan Thiết.</p>
+        <div data-reveal="footer-line" data-reveal-delay="200" className="mt-9 border-t border-white/10 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 text-[13px] text-[#8FA0AC] max-sm:pr-14">
+          {/* Mobile: chừa lề phải cho cột nút nổi → tách 2 dòng gọn thay vì ngắt giữa chữ */}
+          <p>
+            © {YEAR} The Moon Homestay
+            <span className="max-sm:hidden"> · </span>
+            <span className="max-sm:block">Mũi Né & Phan Thiết.</span>
+          </p>
           {/* [CẦN XÁC NHẬN] chưa có trang điều khoản / chính sách — thay href khi có */}
-          <nav aria-label="Chính sách" className="flex items-center gap-4">
+          <nav aria-label="Chính sách" className="flex items-center gap-3 sm:gap-4 whitespace-nowrap">
             <a href="#" className="hover:text-moon-soft transition-colors">
               Điều khoản dịch vụ
             </a>

@@ -12,7 +12,7 @@ export default function Locations() {
   const branch = branches.find((b) => b.id === sel) || branches[0];
 
   return (
-    <section id="vi-tri" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
+    <section id="vi-tri" className="relative w-full pt-12 pb-14 lg:pt-16 lg:pb-28 overflow-hidden">
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* Góc phải tiêu đề: ghi chú viết tay + phao bơi, sóng biển */}
         <div data-reveal="note" data-reveal-delay="250" aria-hidden className="hidden lg:block absolute right-14 xl:right-24 top-0 w-[340px] h-[190px] pointer-events-none">
