@@ -87,7 +87,7 @@ export default function Rooms() {
   ];
 
   return (
-    <section id="phong" className="relative w-full pt-10 pb-20 lg:pt-16 lg:pb-28 overflow-hidden bg-white">
+    <section id="phong" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
       <Leaf className="hidden lg:block absolute -left-5 top-4 w-20 opacity-80 animate-sway" />
       <Sparkles className="hidden 2xl:block absolute right-[2%] top-[10%] w-16 opacity-70" />
       <Blossom className="hidden 2xl:block absolute right-[1.6%] top-[46%] w-6 opacity-70" />
@@ -185,60 +185,63 @@ export default function Rooms() {
 
           {/* Thông tin phòng */}
           <div data-reveal="right" data-reveal-delay="300" className="flex">
-            <div key={room.id} className="w-full flex flex-col justify-end animate-fade-in">
-              <div className="hidden lg:flex items-end justify-end gap-2 mb-auto pr-2 pt-1">
-                <div className="relative w-[84px] h-[96px] bg-white p-1.5 pb-4 rotate-[7deg] shadow-[0_14px_30px_-14px_rgba(23,34,44,0.5)]">
-                  <div className="relative w-full h-full overflow-hidden">
-                    <Image src={room.photos[2]} alt={`Góc nhỏ ${room.name}`} fill sizes="84px" className="object-cover" />
+            <div key={room.id} className="w-full flex flex-col justify-center gap-4 animate-fade-in">
+              <div>
+                {/* Hàng đầu: tên phòng bên trái, polaroid "Cozy stay" bên phải; cả khối canh giữa theo chiều cao ảnh */}
+                <div className="flex items-center justify-between gap-3 mb-2">
+                  <h3 className="font-serif text-[26px] xl:text-[27px] font-semibold text-ink tracking-tight leading-tight lg:whitespace-nowrap">{room.name}</h3>
+                  <div className="hidden lg:flex items-center gap-1 pr-1 shrink-0">
+                    <p className="font-script text-[17px] leading-none text-muted -rotate-6">
+                      Cozy
+                      <br />
+                      stay ☾
+                    </p>
+                    <div className="relative w-[58px] h-[66px] bg-white p-1 pb-3 rotate-[7deg] shadow-[0_14px_30px_-14px_rgba(23,34,44,0.5)]">
+                      <div className="relative w-full h-full overflow-hidden">
+                        <Image src={room.photos[2]} alt={`Góc nhỏ ${room.name}`} fill sizes="58px" className="object-cover" />
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <p className="font-script text-[20px] leading-none text-muted -rotate-6 mb-1">
-                  Cozy
-                  <br />
-                  stay ☾
-                </p>
+                <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-[12.5px] text-muted mb-2.5">
+                  <li className="inline-flex items-center gap-1.5">
+                    <Icon name="users" className="w-4 h-4 text-moon-deep" /> {room.guests} khách
+                  </li>
+                  <li className="inline-flex items-center gap-1.5">
+                    <Icon name="bed" className="w-4 h-4 text-moon-deep" /> {room.bed}
+                  </li>
+                  <li className="inline-flex items-center gap-1.5">
+                    <Icon name="ruler" className="w-4 h-4 text-moon-deep" /> {room.area}
+                  </li>
+                </ul>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {room.tags.map((tag) => (
+                    <span key={tag} className="px-2.5 py-1 rounded-full text-[11.5px] font-medium bg-sand text-ink/75">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-[14px] text-muted leading-relaxed lg:line-clamp-3">{room.desc}</p>
               </div>
 
-              <span className="inline-flex self-start items-center gap-1.5 rounded-full bg-peach/70 px-3 py-1 text-[11px] font-bold text-coral-deep uppercase tracking-wider mb-2.5">
-                <Icon name="star-solid" className="w-3 h-3" /> {room.badge}
-              </span>
-              <h3 className="font-serif text-[28px] font-semibold text-ink tracking-tight leading-tight mb-2">{room.name}</h3>
-              <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-[12.5px] text-muted mb-3">
-                <li className="inline-flex items-center gap-1.5">
-                  <Icon name="users" className="w-4 h-4 text-moon-deep" /> {room.guests} khách
-                </li>
-                <li className="inline-flex items-center gap-1.5">
-                  <Icon name="bed" className="w-4 h-4 text-moon-deep" /> {room.bed}
-                </li>
-                <li className="inline-flex items-center gap-1.5">
-                  <Icon name="ruler" className="w-4 h-4 text-moon-deep" /> {room.area}
-                </li>
-              </ul>
-              <div className="flex flex-wrap gap-1.5 mb-3.5">
-                {room.tags.map((tag) => (
-                  <span key={tag} className="px-2.5 py-1 rounded-full text-[11.5px] font-medium bg-sand text-ink/75">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <p className="text-[14px] text-muted leading-relaxed mb-4">{room.desc}</p>
+              <div>
+                <div className="card-soft grid grid-cols-3 rounded-[20px] divide-x divide-line mb-3">
+                  {prices.map(([label, price]) => (
+                    <div key={label} className="py-2.5 text-center">
+                      <p className="text-[11.5px] text-muted mb-0.5">{label}</p>
+                      <p className="font-serif text-[20px] font-semibold text-moon-deep leading-tight">{price}</p>
+                    </div>
+                  ))}
+                </div>
 
-              <div className="card-soft grid grid-cols-3 rounded-[20px] divide-x divide-line mb-4">
-                {prices.map(([label, price]) => (
-                  <div key={label} className="py-2.5 text-center">
-                    <p className="text-[11.5px] text-muted mb-0.5">{label}</p>
-                    <p className="font-serif text-[20px] font-semibold text-moon-deep leading-tight">{price}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <button type="button" onClick={() => setDetailOpen(true)} className="btn btn-outline !px-4">
-                  Chi tiết phòng <Icon name="expand" className="w-4 h-4" />
-                </button>
-                <button type="button" onClick={() => open({ roomId: room.id, pkg: room.id === 'villa' ? 'villa' : 'night' })} className="btn btn-primary !px-4">
-                  Đặt phòng <Arrow />
-                </button>
+                <div className="grid grid-cols-2 gap-3">
+                  <button type="button" onClick={() => setDetailOpen(true)} className="btn btn-outline !px-4">
+                    Chi tiết phòng <Icon name="expand" className="w-4 h-4" />
+                  </button>
+                  <button type="button" onClick={() => open({ roomId: room.id, pkg: room.id === 'villa' ? 'villa' : 'night' })} className="btn btn-primary !px-4">
+                    Đặt phòng <Arrow />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

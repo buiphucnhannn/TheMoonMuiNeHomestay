@@ -48,7 +48,7 @@ export default function Navbar() {
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (e) => e.key === 'Escape' && setMenuOpen(false);
-    const mq = window.matchMedia('(min-width: 1280px)');
+    const mq = window.matchMedia('(min-width: 1024px)');
     const onMq = () => mq.matches && setMenuOpen(false);
     window.addEventListener('keydown', onKey);
     mq.addEventListener('change', onMq);
@@ -70,7 +70,7 @@ export default function Navbar() {
           setMenuOpen(false);
         }}
         onPointerDown={(e) => e.preventDefault()}
-        className={`xl:hidden fixed inset-0 z-40 bg-night/30 backdrop-blur-[2px] transition-[opacity,visibility] duration-300 ${menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+        className={`lg:hidden fixed inset-0 z-40 bg-night/30 backdrop-blur-[2px] transition-[opacity,visibility] duration-300 ${menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
       />
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -89,7 +89,7 @@ export default function Navbar() {
             />
           </a>
 
-          <nav className="hidden xl:flex items-center gap-7 rounded-full px-6 py-2.5 bg-white/70 backdrop-blur-sm ring-1 ring-white/80 shadow-[0_8px_24px_-18px_rgba(23,34,44,0.5)]" aria-label="Điều hướng chính">
+          <nav className="hidden lg:flex items-center gap-7 rounded-full px-6 py-2.5 bg-white/70 backdrop-blur-sm ring-1 ring-white/80 shadow-[0_8px_24px_-18px_rgba(23,34,44,0.5)]" aria-label="Điều hướng chính">
             {navLinks.map((item) => {
               const isActive = active === item.href.slice(1);
               return (
@@ -107,22 +107,13 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden sm:flex items-center gap-2.5">
-            <a
-              href={telHref(siteConfig.hotline)}
-              className="hidden lg:inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm ring-1 ring-white/80 pl-1 pr-4 py-1 text-[13.5px] font-semibold text-ink/85 hover:text-moon-deep transition-colors"
-            >
-              <span className="w-8 h-8 rounded-full bg-sky text-moon-deep flex items-center justify-center">
-                <Icon name="phone" className="w-4 h-4" />
-              </span>
-              {siteConfig.hotline}
-            </a>
             <button type="button" onClick={() => open()} className="btn btn-primary !py-2.5 !px-5 !text-[13px]">
               Đặt phòng <Arrow />
             </button>
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
-              className="xl:hidden w-10 h-10 rounded-full bg-white/80 text-ink flex items-center justify-center ring-1 ring-line cursor-pointer"
+              className="lg:hidden w-10 h-10 rounded-full bg-white/80 text-ink flex items-center justify-center ring-1 ring-line cursor-pointer"
               aria-label={menuOpen ? 'Đóng menu' : 'Mở menu'}
               aria-expanded={menuOpen}
             >
@@ -147,7 +138,7 @@ export default function Navbar() {
         </div>
 
         {menuOpen && (
-          <div className="xl:hidden px-4 sm:px-6 pt-3 pb-5">
+          <div className="lg:hidden px-4 sm:px-6 pt-3 pb-5">
             <div className="rounded-[26px] card-soft p-3 space-y-0.5">
               {navLinks.map((item) => (
                 <a

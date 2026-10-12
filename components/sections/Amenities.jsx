@@ -8,7 +8,7 @@ const BADGE_COLORS = ['#0E93B3', '#D06A43', '#D9488F', '#B88A3E'];
 
 export default function Amenities() {
   return (
-    <section id="tien-nghi" className="relative w-full pt-14 pb-24 lg:pt-20 lg:pb-32 overflow-hidden bg-sky/55">
+    <section id="tien-nghi" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
       <Leaf className="hidden lg:block absolute -left-4 top-2 w-20 opacity-80 animate-sway" />
       <Sun className="hidden xl:block absolute right-[4%] top-[6%] w-12 opacity-80 animate-float" />
 
@@ -95,7 +95,7 @@ export default function Amenities() {
         </div>
       </div>
 
-      <DecorRow variant="a" />
+      <DecorRow variant="d" />
     </section>
   );
 }

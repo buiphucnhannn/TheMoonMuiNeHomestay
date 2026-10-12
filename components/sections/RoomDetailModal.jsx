@@ -44,13 +44,13 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
   const prices = [
     ['Nghỉ ngắn 3 giờ', room.priceShort],
     ['Theo ngày 12 giờ', room.priceDay],
-    ['Qua đêm (14:00 → 12:00)', room.priceNight],
+    ['Qua đêm 14h → 12h', room.priceNight],
   ];
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6 bg-night/65 backdrop-blur-[3px] animate-fade-in overscroll-contain" onClick={onClose} role="presentation">
       <div
-        className="relative w-full max-w-5xl max-h-[calc(100svh-1.5rem)] overflow-y-auto overscroll-contain scrollbar-none bg-cream rounded-[28px] shadow-2xl border border-line"
+        className="relative w-full max-w-5xl xl:max-w-6xl max-h-[calc(100svh-1.5rem)] sm:max-h-[calc(100svh-3rem)] overflow-y-auto overscroll-contain scrollbar-none bg-cream rounded-[28px] shadow-2xl border border-line"
         role="dialog"
         aria-modal="true"
         aria-labelledby="room-detail-title"
@@ -67,8 +67,8 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
 
         <div className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
           {/* Ảnh */}
-          <div className="p-3 sm:p-4 lg:p-5 lg:pr-0">
-            <div className="relative aspect-[4/3] rounded-[22px] overflow-hidden bg-sand ring-4 ring-white">
+          <div className="p-3 sm:p-4 lg:p-5 lg:pr-0 lg:flex lg:flex-col">
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:flex-1 lg:min-h-[320px] rounded-[22px] overflow-hidden bg-sand ring-4 ring-white">
               <Image key={room.photos[idx]} src={room.photos[idx]} alt={`${room.name} — ảnh ${idx + 1}`} fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover animate-fade-in" />
               <button type="button" onClick={() => setIdx((i) => (i - 1 + room.photos.length) % room.photos.length)} aria-label="Ảnh trước" className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 text-ink flex items-center justify-center shadow hover:text-moon-deep cursor-pointer">
                 <Icon name="chevron-left" className="w-4 h-4" strokeWidth={2} />
@@ -90,7 +90,7 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
           </div>
 
           {/* Thông tin */}
-          <div className="p-5 sm:p-6 lg:p-7 lg:pl-6">
+          <div className="p-5 sm:p-6 lg:py-6 lg:pl-6 lg:pr-7">
             <p className="eyebrow mb-2">
               {branch.name} · {room.type}
             </p>
@@ -111,10 +111,10 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
                 <Icon name="map-pin" className="w-4 h-4 text-coral" /> {branch.addressShort}
               </li>
             </ul>
-            <p className="mt-3.5 text-[14.5px] text-muted leading-relaxed">{room.desc}</p>
+            <p className="mt-3 text-[14px] text-muted leading-relaxed">{room.desc}</p>
 
-            <p className="mt-5 text-[12px] font-bold tracking-[0.2em] uppercase text-moon-deep">Tiện nghi trong phòng</p>
-            <ul className="mt-2.5 grid sm:grid-cols-2 gap-x-4 gap-y-1.5 text-[13.5px] text-ink/85">
+            <p className="mt-4 text-[12px] font-bold tracking-[0.2em] uppercase text-moon-deep">Tiện nghi trong phòng</p>
+            <ul className="mt-2 grid sm:grid-cols-2 gap-x-4 gap-y-1 text-[13px] text-ink/85">
               {room.amenities.map((a) => (
                 <li key={a} className="inline-flex items-start gap-2">
                   <Icon name="check" className="w-4 h-4 mt-0.5 shrink-0 text-moon" strokeWidth={2.2} /> {a}
@@ -122,16 +122,16 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
               ))}
             </ul>
 
-            <div className="mt-5 card-soft rounded-[20px] divide-y divide-line">
+            <div className="mt-4 card-soft rounded-[20px] grid grid-cols-3 divide-x divide-line">
               {prices.map(([label, price]) => (
-                <div key={label} className="flex items-center justify-between px-4 py-2.5 text-[13.5px]">
-                  <span className="text-muted">{label}</span>
-                  <span className="font-serif text-[19px] font-semibold text-moon-deep">{price}</span>
+                <div key={label} className="px-2 py-2.5 text-center">
+                  <p className="text-[11.5px] text-muted leading-snug">{label}</p>
+                  <p className="font-serif text-[20px] font-semibold text-moon-deep leading-tight mt-0.5">{price}</p>
                 </div>
               ))}
             </div>
 
-            <ul className="mt-4 grid sm:grid-cols-2 gap-x-4 gap-y-1 text-[12.5px] text-muted">
+            <ul className="mt-3.5 grid sm:grid-cols-2 gap-x-4 gap-y-1 text-[12px] leading-snug text-muted">
               {roomPolicies.map((p) => (
                 <li key={p} className="inline-flex items-start gap-1.5">
                   <Icon name="shield" className="w-3.5 h-3.5 mt-0.5 shrink-0 text-gold" /> {p}
@@ -139,7 +139,7 @@ export default function RoomDetailModal({ room, onClose, onBook }) {
               ))}
             </ul>
 
-            <div className="mt-5 grid sm:grid-cols-2 gap-3">
+            <div className="mt-4 grid sm:grid-cols-2 gap-3">
               <button type="button" onClick={onBook} className="btn btn-primary">
                 Đặt phòng này <Arrow />
               </button>

@@ -50,6 +50,13 @@ export const metadata = {
     description: siteConfig.description,
   },
   twitter: { card: 'summary_large_image', title: TITLE, description: siteConfig.description },
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: '/apple-icon.png',
+  },
 };
 
 export const viewport = {
@@ -74,8 +81,8 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="vi" className={`${playfair.variable} ${dancing.variable} ${beVietnam.variable}`}>
-      <body className="font-sans antialiased text-ink bg-cream selection:bg-moon-soft selection:text-ink">
+    <html lang="vi" suppressHydrationWarning className={`${playfair.variable} ${dancing.variable} ${beVietnam.variable}`}>
+      <body suppressHydrationWarning className="font-sans antialiased text-ink bg-cream selection:bg-moon-soft selection:text-ink">
         <BookingProvider>
           <Navbar />
           <main className="w-full overflow-hidden">{children}</main>

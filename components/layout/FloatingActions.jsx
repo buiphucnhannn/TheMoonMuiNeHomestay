@@ -17,19 +17,19 @@ export default function FloatingActions() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const circle = 'relative w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-transform duration-300 hover:-translate-y-1';
+  const circle = 'relative w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-transform duration-300 hover:-translate-y-0.5 cursor-pointer';
 
   return (
-    <div className="fixed right-3 sm:right-5 bottom-4 sm:bottom-6 z-40 flex flex-col items-center gap-2.5 sm:gap-3">
+    <div className="fixed right-3 sm:right-4 bottom-4 sm:bottom-5 z-40 flex flex-col items-center gap-2 sm:gap-2.5">
       <button
         type="button"
         onClick={() => smoothScrollTo(0)}
         aria-label="Lên đầu trang"
-        className={`${circle} bg-white text-ink shadow-[0_10px_24px_-8px_rgba(23,34,44,0.45)] hover:text-moon-deep cursor-pointer ${
+        className={`${circle} bg-white text-ink shadow-[0_8px_20px_-6px_rgba(23,34,44,0.35)] hover:text-moon-deep ${
           showTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >
-        <Icon name="arrow-up" className="w-5 h-5" strokeWidth={2} />
+        <Icon name="arrow-up" className="w-4 h-4" strokeWidth={2} />
       </button>
 
       <a
@@ -38,10 +38,10 @@ export default function FloatingActions() {
         rel="noopener noreferrer"
         aria-label="Nhắn tin Messenger"
         title="Messenger"
-        className={`${circle} text-white shadow-[0_10px_24px_-8px_rgba(0,132,255,0.7)]`}
+        className={`${circle} text-white shadow-[0_8px_20px_-6px_rgba(0,132,255,0.6)]`}
         style={{ background: 'linear-gradient(135deg,#00B2FF 0%,#006AFF 60%,#A033FF 120%)' }}
       >
-        <Icon name="messenger" className="w-6 h-6 sm:w-7 sm:h-7" />
+        <Icon name="messenger" className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
       </a>
 
       <a
@@ -50,19 +50,19 @@ export default function FloatingActions() {
         rel="noopener noreferrer"
         aria-label={`Chat Zalo ${siteConfig.zalo}`}
         title="Zalo"
-        className={`${circle} bg-[#0068FF] text-white shadow-[0_10px_24px_-8px_rgba(0,104,255,0.7)]`}
+        className={`${circle} bg-[#0068FF] text-white shadow-[0_8px_20px_-6px_rgba(0,104,255,0.6)]`}
       >
-        <ZaloMark className="text-[13px] sm:text-[15px]" />
+        <ZaloMark className="text-[11px] sm:text-[12px]" />
       </a>
 
       <a
         href={telHref(siteConfig.hotline)}
         aria-label={`Gọi ${siteConfig.hotline}`}
         title={`Gọi ${siteConfig.hotline}`}
-        className={`${circle} bg-moon text-white shadow-[0_10px_24px_-8px_rgba(20,181,217,0.9)] hover:bg-moon-deep`}
+        className={`${circle} bg-moon text-white shadow-[0_8px_20px_-6px_rgba(20,181,217,0.7)] hover:bg-moon-deep`}
       >
         <span className="absolute inset-0 rounded-full bg-moon/40 animate-ping" />
-        <Icon name="phone" className="relative w-6 h-6" />
+        <Icon name="phone" className="relative w-5 h-5" />
       </a>
     </div>
   );

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Icon from '@/components/ui/Icon';
-import { Blossom, Crescent, Leaf } from '@/components/ui/Organic';
+import { Blossom, BlossomBranch, Crescent, DecorRow, Leaf, PoolRing, Sparkles } from '@/components/ui/Organic';
 import { galleryImages } from '@/data/site';
 
 function Lightbox({ index, onClose, onStep }) {
@@ -68,13 +68,28 @@ export default function Gallery() {
   }, [index, step, close]);
 
   return (
-    <section id="hinh-anh" className="relative w-full pt-16 pb-24 lg:pt-20 lg:pb-28 overflow-hidden">
-      <Crescent className="hidden lg:block absolute left-[3%] top-[6%] w-20 opacity-70 animate-float" />
+    <section id="hinh-anh" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
       <Leaf className="hidden 2xl:block absolute -right-5 top-[30%] w-20 opacity-80 animate-sway" flip />
-      <Blossom className="hidden lg:block absolute right-[6%] top-[9%] w-6 opacity-80" />
 
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+        {/* Hai bên tiêu đề */}
+        <div data-reveal="decor" aria-hidden className="hidden lg:block absolute left-10 xl:left-20 top-0 w-[260px] h-[170px] pointer-events-none">
+          <Crescent className="absolute left-0 top-0 w-20 opacity-75 animate-float" />
+          <PoolRing className="absolute left-[120px] top-[92px] w-12 animate-drift" />
+          <Sparkles className="absolute left-[170px] top-6 w-14 opacity-80" />
+        </div>
+        <div data-reveal="note" data-reveal-delay="250" aria-hidden className="hidden lg:block absolute right-10 xl:right-20 top-0 w-[260px] h-[170px] pointer-events-none">
+          <p className="absolute left-2 top-8 font-script text-[28px] leading-[1.1] text-ink/65 rotate-[6deg] text-center">
+            Say cheese!
+            <br />
+            <span className="text-[22px]">tách ☾</span>
+          </p>
+          <BlossomBranch className="absolute right-0 top-0 w-28" flip />
+          <Blossom className="absolute right-16 bottom-6 w-6 opacity-85" />
+        </div>
+
         <SectionHeading
+          reveal="focus"
           align="center"
           eyebrow="Hình ảnh"
           title="Góc nào cũng"
@@ -105,6 +120,8 @@ export default function Gallery() {
           ))}
         </div>
       </div>
+
+      <DecorRow variant="e" />
 
       {index >= 0 && <Lightbox index={index} onClose={close} onStep={step} />}
     </section>

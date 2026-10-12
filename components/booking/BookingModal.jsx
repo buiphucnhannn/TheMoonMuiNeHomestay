@@ -86,14 +86,34 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
     return room.priceNight;
   };
 
+  // Tạm tính: tên phòng một dòng riêng (không cắt "…"), gói + giá ở hàng dưới
+  const summary = room && (
+    <div>
+      <span className="block text-[11px] uppercase tracking-wider opacity-75">Tạm tính</span>
+      <span className="block mt-0.5 text-[14px] font-semibold leading-snug">{room.name}</span>
+      <div className="mt-2 pt-2 border-t border-current/20 flex items-baseline justify-between gap-3">
+        <span className="text-[12.5px] opacity-80">{pkg.name}</span>
+        {pkg.id !== 'villa' ? (
+          <span className="shrink-0 font-serif text-[22px] font-semibold leading-none whitespace-nowrap">
+            {priceOf()}
+            <span className="ml-1 font-sans text-[11px] font-normal opacity-75">{isNight ? '/ đêm' : ''}</span>
+          </span>
+        ) : (
+          <span className="shrink-0 font-serif text-[18px] font-semibold leading-none whitespace-nowrap">từ 3.500k</span>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div
       className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6 bg-night/60 backdrop-blur-[3px] animate-fade-in overscroll-contain"
       onClick={onClose}
       role="presentation"
     >
+      {/* Vừa 1 màn hình; ẩn thanh cuộn nhưng vẫn lăn/vuốt được nếu ô ghi chú bị kéo giãn */}
       <div
-        className="relative w-full max-w-xl max-h-[calc(100svh-1.5rem)] overflow-y-auto overscroll-contain scrollbar-none bg-cream rounded-[28px] shadow-2xl border border-line"
+        className="relative w-full max-w-xl md:max-w-[880px] max-h-[calc(100svh-1.5rem)] sm:max-h-[calc(100svh-3rem)] overflow-y-auto overscroll-contain scrollbar-none bg-cream rounded-[28px] shadow-2xl border border-line md:grid md:grid-cols-[300px_minmax(0,1fr)]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="booking-title"
@@ -108,16 +128,39 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
           <Icon name="close" className="w-4 h-4" />
         </button>
 
+        {/* Cột trái (desktop): ảnh nét nhất của cơ sở đang chọn + liên hệ nhanh + tạm tính */}
+        <aside className="relative hidden md:flex flex-col justify-between p-5 text-white overflow-hidden">
+          <Image key={branch.image} src={branch.image} alt={branch.name} fill sizes="300px" className="object-cover animate-fade-in" style={{ objectPosition: branch.imageFocus }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-night/35 via-night/10 to-night/85" />
+          <div className="relative flex justify-center">
+            <span className="inline-flex rounded-2xl bg-cream/95 px-3 py-2 shadow">
+              <Image src="/images/brand/wordmark-640.png" alt="The Moon Homestay" width={640} height={365} className="h-9 w-auto" />
+            </span>
+          </div>
+          <div className="relative space-y-3">
+            <p className="font-script text-[30px] leading-[1.05] text-[#F8D9A6] -rotate-3 drop-shadow">Chill vài hôm ☾</p>
+            <div className="space-y-1.5 text-[13px]">
+              <a href={telHref(siteConfig.hotline)} className="flex items-center gap-2 hover:text-moon-soft">
+                <Icon name="phone" className="w-4 h-4" /> {siteConfig.hotline}
+              </a>
+              <a href={zaloHref(siteConfig.zalo)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-moon-soft">
+                <ZaloMark className="w-4 text-[9px]" /> Zalo {siteConfig.zalo}
+              </a>
+            </div>
+            <div className="rounded-2xl bg-white/15 backdrop-blur-md ring-1 ring-white/25 px-3.5 py-3">{summary}</div>
+          </div>
+        </aside>
+
         {!submitted ? (
-          <div className="p-5 sm:p-8">
-            <div className="text-center mb-6">
-              <Image src="/images/brand/wordmark-640.png" alt="The Moon Homestay" width={640} height={365} className="mx-auto mb-3 h-12 w-auto" />
-              <span className="eyebrow justify-center mb-1.5">Đặt phòng nhanh</span>
-              <h3 id="booking-title" className="font-serif text-2xl sm:text-[30px] text-ink leading-tight">
+          <div className="p-5 sm:p-7">
+            <div className="text-center mb-4 px-8 md:px-10">
+              <Image src="/images/brand/wordmark-640.png" alt="The Moon Homestay" width={640} height={365} className="md:hidden mx-auto mb-2 h-10 w-auto" />
+              <span className="eyebrow justify-center mb-1 before:hidden">Đặt phòng nhanh</span>
+              <h3 id="booking-title" className="font-serif text-2xl sm:text-[28px] text-ink leading-tight">
                 Giữ phòng trong 30 giây
               </h3>
-              <p className="text-[13px] text-muted mt-1.5">
-                Hoặc gọi/Zalo ngay: <strong className="text-moon-deep font-semibold">{siteConfig.hotline}</strong> · <strong className="text-moon-deep font-semibold">{siteConfig.zalo}</strong>
+              <p className="md:hidden text-[13px] text-muted mt-1">
+                Hoặc gọi/Zalo: <strong className="text-moon-deep font-semibold">{siteConfig.hotline}</strong> · <strong className="text-moon-deep font-semibold">{siteConfig.zalo}</strong>
               </p>
             </div>
 
@@ -126,7 +169,7 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
                 e.preventDefault();
                 setSubmitted(true);
               }}
-              className="space-y-4"
+              className="space-y-3"
             >
               <div>
                 <span className={labelCls}>Chọn cơ sở</span>
@@ -145,7 +188,6 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
                   ))}
                 </div>
               </div>
-
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className={labelCls} htmlFor="bk-room">
@@ -175,12 +217,12 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
                 </div>
               </div>
 
-              <div className={`grid gap-3 ${isNight ? 'grid-cols-3' : 'grid-cols-2'}`}>
+              <div className={`grid gap-3 ${isNight ? 'grid-cols-[1.35fr_1fr_1fr] sm:grid-cols-3' : 'grid-cols-2'}`}>
                 <div className={isNight ? '' : 'col-span-1'}>
                   <label className={labelCls} htmlFor="bk-date">
                     Ngày nhận phòng
                   </label>
-                  <input id="bk-date" type="date" required min={minDate} value={date} onChange={(e) => setPickedDate(e.target.value)} className={inputCls} />
+                  <input id="bk-date" type="date" required min={minDate} value={date} onChange={(e) => setPickedDate(e.target.value)} className={`${inputCls} max-sm:px-2.5 max-sm:text-[13px]`} />
                 </div>
                 {isNight && (
                   <div>
@@ -223,31 +265,25 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
                   placeholder="Ví dụ: cần nhận phòng sớm, chuẩn bị BBQ, có trẻ nhỏ..."
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  className={`${inputCls} min-h-[46px] max-h-[160px] resize-y leading-relaxed`}
+                  className={`${inputCls} resize-none leading-relaxed`}
                 />
               </div>
 
-              {room && pkg.id !== 'villa' && (
-                <div className="flex items-center justify-between rounded-2xl bg-sky px-4 py-3 text-[13px]">
-                  <span className="text-moon-ink">
-                    {room.name} · {pkg.name}
-                  </span>
-                  <span className="font-serif text-[20px] font-semibold text-moon-deep">
-                    {priceOf()}
-                    <span className="ml-1 font-sans text-[11px] font-normal text-muted">{isNight ? '/ đêm' : ''}</span>
-                  </span>
-                </div>
-              )}
+              {room && <div className="md:hidden rounded-2xl bg-sky px-4 py-3 text-moon-ink">{summary}</div>}
 
               <button type="submit" className="btn btn-primary w-full !py-3.5 !text-[15px]">
                 Gửi yêu cầu giữ phòng
                 <Icon name="chevron-right" className="w-4 h-4" />
               </button>
-              <p className="text-center text-[12px] text-muted">Bấm gửi là đồng ý để The Moon gọi/nhắn xác nhận. Không spam, không cọc trước khi xác nhận.</p>
+              <p className="text-center text-[11.5px] text-muted leading-relaxed">
+                Bấm gửi là đồng ý để The Moon gọi/nhắn xác nhận.
+                <br />
+                Không spam, không cọc trước khi xác nhận.
+              </p>
             </form>
           </div>
         ) : (
-          <div className="p-6 sm:p-8 text-center">
+          <div className="p-6 sm:p-8 text-center self-center">
             <div className="w-16 h-16 rounded-full bg-sky text-moon-deep flex items-center justify-center mx-auto mb-4">
               <Icon name="check" className="w-8 h-8" strokeWidth={2} />
             </div>
@@ -256,7 +292,7 @@ export default function BookingModal({ isOpen, onClose, defaultRoomId, defaultPk
               The Moon sẽ gọi hoặc nhắn Zalo tới số <strong className="text-ink">{phone}</strong> trong vài phút để xác nhận phòng. Muốn nhanh hơn, gửi luôn tin nhắn bên dưới nhé.
             </p>
             <div className="rounded-2xl bg-white border border-line p-4 text-left text-[13px] text-ink/80 leading-relaxed mb-5">{message}</div>
-            <div className="grid sm:grid-cols-3 gap-2.5">
+            <div className="grid sm:grid-cols-3 gap-2.5 [&>a]:!px-3">
               <a href={zaloHref(siteConfig.zalo, message)} target="_blank" rel="noopener noreferrer" className="btn !bg-[#0068FF] !text-white hover:!bg-[#0052cc]">
                 <ZaloMark className="text-[13px]" /> Nhắn Zalo ngay
               </a>

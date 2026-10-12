@@ -17,22 +17,19 @@ export const siteConfig = {
   hotline: '0975 141 372',
   zalo: '0933 309 981', // SĐT / Zalo trong hồ sơ
   zaloUrl: 'https://zalo.me/0933309981',
-  facebookUrl: 'https://www.facebook.com/search/top?q=the%20moon%20muine%20homestay', // [CẦN XÁC NHẬN] link fanpage thật
-  messengerUrl: 'https://www.facebook.com/search/top?q=the%20moon%20muine%20homestay', // [CẦN XÁC NHẬN] https://m.me/<tên-fanpage>
+  facebookUrl: 'https://www.facebook.com/profile.php?id=61563096269867',
+  messengerUrl: 'https://m.me/61563096269867', // chat Messenger với fanpage (theo ID trang)
   checkin: '14:00',
   checkout: '12:00',
   supportHours: '7:00 – 23:00 mỗi ngày',
 };
 
 export const navLinks = [
-  { label: 'Trang chủ', href: '#trang-chu' },
   { label: 'Giới thiệu', href: '#gioi-thieu' },
   { label: 'Phòng', href: '#phong' },
   { label: 'Bảng giá', href: '#bang-gia' },
   { label: 'Tiện nghi', href: '#tien-nghi' },
-  { label: 'Hình ảnh', href: '#hinh-anh' },
   { label: 'Vị trí', href: '#vi-tri' },
-  { label: 'Liên hệ', href: '#lien-he' },
 ];
 
 /* ---------------- 2 cơ sở ---------------- */
@@ -45,6 +42,7 @@ export const branches = [
     address: '195/8 Huỳnh Thúc Kháng, Mũi Né, TP. Phan Thiết',
     addressShort: '195/8 Huỳnh Thúc Kháng, Mũi Né',
     image: '/images/branches/muine.jpg',
+    imageFocus: '21% 50%', // điểm lấy khung khi cắt dọc (cột ảnh popup đặt phòng)
     thumb: '/images/gallery/bougainvillea.jpg',
     highlights: ['Cách biển Hàm Tiến ~300 m', 'Sân vườn & phòng khách chung', 'Đậu xe miễn phí trong sân'],
     mapQuery: 'The Moon Muine Homestay, 195/8 Huỳnh Thúc Kháng, Mũi Né, Phan Thiết',
@@ -64,6 +62,7 @@ export const branches = [
     address: '344 Thủ Khoa Huân, TP. Phan Thiết',
     addressShort: '344 Thủ Khoa Huân, Phan Thiết',
     image: '/images/gallery/pool-courtyard.jpg',
+    imageFocus: '40% 50%',
     thumb: '/images/gallery/neon-pool.jpg',
     highlights: ['Hồ bơi riêng giữa sân', '4 phòng ngủ · 4 WC · bếp đầy đủ', 'Cách biển Đồi Dương ~800 m'],
     mapQuery: 'The Moon Phan Thiet Homestay, 344 Thủ Khoa Huân, Phan Thiết',
@@ -317,14 +316,6 @@ export const bannerData = {
   script: 'Stay\na little longer ☾',
   ctaText: 'Đặt phòng ngay',
   image: '/images/banner/bbq-night.jpg',
-};
-
-/* ---------------- Liên hệ ---------------- */
-export const contactData = {
-  eyebrow: 'Liên hệ & đặt phòng',
-  title: 'Nhắn một tin, có ngay phòng',
-  desc: 'Gọi, Zalo hoặc để lại yêu cầu — tụi mình xác nhận phòng trống trong vài phút. Không cần cọc với booking ngày thường dưới 2 đêm.',
-  promises: ['Giữ phòng miễn phí 2 giờ', 'Hủy miễn phí trước 3 ngày', 'Hỗ trợ đưa đón, thuê xe máy'],
 };
 
 /* ---------------- Chính sách chung (hiện trong popup chi tiết phòng) ---------------- */

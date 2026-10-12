@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import BookingButton from '@/components/booking/BookingButton';
 import Icon from '@/components/ui/Icon';
-import { Arrow, Blossom, Crescent, Leaf, OrganicFrame, Sparkles } from '@/components/ui/Organic';
+import { Blossom, Crescent, Leaf, OrganicFrame, Sparkles } from '@/components/ui/Organic';
 import { heroData } from '@/data/site';
 
 /*
@@ -24,7 +24,7 @@ export default function Hero() {
     <section id="trang-chu" className="relative w-full overflow-hidden bg-cream lg:h-[100svh] lg:min-h-[660px]">
       {/* Quầng sáng xanh nhạt phía sau chữ */}
       <div aria-hidden className="absolute -left-40 top-16 w-[460px] h-[460px] rounded-full bg-sky-deep/60 blur-3xl pointer-events-none" />
-      <div aria-hidden className="absolute left-[30%] -bottom-24 w-[360px] h-[360px] rounded-full bg-peach/50 blur-3xl pointer-events-none" />
+      <div aria-hidden className="absolute left-[25%] bottom-12 w-[340px] h-[340px] rounded-full bg-peach/40 blur-3xl pointer-events-none" />
 
       {/* Ảnh — desktop phủ kín chiều cao màn hình, cạnh trái tan mờ vào nền */}
       <div className="hidden lg:block absolute inset-y-0 right-0 w-[52%] xl:w-[55%] overflow-hidden" style={MASK_STYLE}>
@@ -38,10 +38,14 @@ export default function Hero() {
             sizes="(min-width:1024px) 55vw, 1px"
             className="object-cover object-[58%_center]"
           />
-          <div className="absolute inset-x-0 bottom-0 h-[32%] bg-gradient-to-t from-night/35 to-transparent pointer-events-none" />
-          <div className="absolute right-[19%] bottom-[9%] rounded-[30px] bg-night/45 backdrop-blur-sm px-8 py-5 text-right -rotate-6 pointer-events-none ring-1 ring-white/15">
+
+          {/* Dòng chữ viết tay hòa tự nhiên với nền ảnh, nổi bật nhờ drop-shadow nghệ thuật */}
+          <div className="absolute right-[14%] xl:right-[17%] bottom-[14%] xl:bottom-[16%] text-right -rotate-3 pointer-events-none select-none">
             {heroData.photoNote.split('\n').map((line) => (
-              <p key={line} className="font-script text-[clamp(22px,3.2vh,30px)] leading-[1.1] text-[#FFF6EA]">
+              <p
+                key={line}
+                className="font-script text-[clamp(26px,3.8vh,38px)] leading-[1.15] text-white tracking-wide drop-shadow-[0_2px_8px_rgba(10,22,32,0.95)] drop-shadow-[0_4px_18px_rgba(10,22,32,0.7)]"
+              >
                 {line}
               </p>
             ))}
@@ -80,23 +84,11 @@ export default function Hero() {
             {heroData.desc}
           </p>
 
-          <div data-reveal="hero-text" data-reveal-delay="520" className="mt-[clamp(20px,3.6vh,34px)] grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-3">
+          <div data-reveal="hero-text" data-reveal-delay="520" className="mt-[clamp(20px,3.6vh,34px)] flex items-center">
             <BookingButton className="lg:!text-[15.5px] lg:!px-8 lg:!py-[15px]">Đặt phòng ngay</BookingButton>
-            <a href="#phong" className="btn btn-outline lg:!text-[15.5px] lg:!px-8 lg:!py-[14px]">
-              Khám phá phòng <Arrow />
-            </a>
           </div>
 
-          <ul data-reveal="hero-text" data-reveal-delay="660" className="mt-[clamp(18px,3.4vh,32px)] flex flex-wrap gap-2">
-            {heroData.chips.map((c) => (
-              <li key={c.text} className="chip !bg-white/80 ring-1 ring-line !text-ink/80">
-                <Icon name={c.icon} className="w-4 h-4 text-moon-deep" />
-                {c.text}
-              </li>
-            ))}
-          </ul>
-
-          <p data-reveal="hero-text" data-reveal-delay="760" className="mt-4 text-[13px] text-muted inline-flex items-center gap-2">
+          <p data-reveal="hero-text" data-reveal-delay="660" className="mt-[clamp(16px,2.5vh,24px)] text-[13px] text-muted inline-flex items-center gap-2">
             <Icon name="heart-solid" className="w-3.5 h-3.5 text-blossom" />
             {heroData.socialProof}
           </p>
@@ -122,14 +114,6 @@ export default function Hero() {
         <Crescent className="absolute left-6 -bottom-1 w-16 opacity-80" />
       </div>
 
-      {/* Nút cuộn */}
-      <a
-        href="#gioi-thieu"
-        aria-label="Cuộn xuống phần giới thiệu"
-        className="absolute z-20 bottom-[clamp(12px,2.2vh,22px)] left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-white shadow-[0_8px_20px_-8px_rgba(23,34,44,0.45)] flex items-center justify-center text-muted hover:text-moon-deep transition-colors"
-      >
-        <Icon name="chevron-down" className="w-4 h-4 animate-bounce" strokeWidth={2} />
-      </a>
     </section>
   );
 }

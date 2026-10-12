@@ -1,18 +1,17 @@
 import SectionHeading from '@/components/ui/SectionHeading';
 import Icon from '@/components/ui/Icon';
-import { Blossom, Crescent, Leaf, Sparkles } from '@/components/ui/Organic';
+import { Crescent, DecorRow, Sparkles } from '@/components/ui/Organic';
 import { siteConfig, testimonials } from '@/data/site';
 
 const REVEAL = ['fan-l', 'up', 'fan-r'];
 
 export default function Testimonials() {
   return (
-    <section id="danh-gia" className="relative w-full pt-16 pb-24 lg:pt-20 lg:pb-28 overflow-hidden bg-warm">
+    <section id="danh-gia" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
       <Crescent className="hidden lg:block absolute right-[4%] top-[10%] w-20 opacity-70 animate-float" />
-      <Leaf className="hidden 2xl:block absolute -left-4 bottom-6 w-20 opacity-80 animate-sway" />
 
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
-        <SectionHeading align="center" eyebrow="Đánh giá" title="Khách ở xong" script="đều muốn quay lại" desc="Vài dòng khách để lại sau kỳ nghỉ ở The Moon." />
+        <SectionHeading reveal="rise-blur" align="center" eyebrow="Đánh giá" title="Khách ở xong" script="đều muốn quay lại" desc="Vài dòng khách để lại sau kỳ nghỉ ở The Moon." />
 
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {testimonials.map((t, i) => (
@@ -52,7 +51,7 @@ export default function Testimonials() {
       </div>
 
       <Sparkles className="hidden lg:block absolute left-[6%] top-[14%] w-14 opacity-70" />
-      <Blossom className="hidden lg:block absolute right-[10%] bottom-[14%] w-6 opacity-70" />
+      <DecorRow variant="b" />
     </section>
   );
 }

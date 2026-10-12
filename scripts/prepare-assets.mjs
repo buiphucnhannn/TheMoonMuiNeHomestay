@@ -78,9 +78,9 @@ await sharp(join(OUT, 'brand/wordmark.png')).resize({ width: 640 }).png().toFile
 await jpg(join(SRC, 'logo.jpg')).resize(1024, 1024).jpeg({ quality: 85 }).toFile(join(OUT, 'brand/logo-square.jpg'));
 console.log('✓ brand/wordmark.png, wordmark-640.png, logo-square.jpg');
 
-// ---------- 4. Icon web (favicon / apple / android) từ public/brand/icon.svg ----------
-const ICON = join(PUB, 'brand/icon.svg');
-const icon = (size) => sharp(ICON, { density: 384 }).resize(size, size).png();
+// ---------- 4. Icon web (favicon / apple / android) từ public/images/brand/logo-square.jpg ----------
+const LOGO_ICON = join(OUT, 'brand/logo-square.jpg');
+const icon = (size) => sharp(LOGO_ICON).resize(size, size, { fit: 'cover' }).png();
 await icon(512).toFile(join(APP, 'icon.png'));
 await icon(180).toFile(join(APP, 'apple-icon.png'));
 await icon(192).toFile(join(PUB, 'android-chrome-192x192.png'));
@@ -110,8 +110,10 @@ function buildIco(frames) {
 }
 const frames = [];
 for (const size of [16, 32, 48]) frames.push({ size, data: await icon(size).toBuffer() });
-writeFileSync(join(APP, 'favicon.ico'), buildIco(frames));
-console.log('✓ app/favicon.ico, icon.png, apple-icon.png');
+const icoBuffer = buildIco(frames);
+writeFileSync(join(APP, 'favicon.ico'), icoBuffer);
+writeFileSync(join(PUB, 'favicon.ico'), icoBuffer);
+console.log('✓ app/favicon.ico, public/favicon.ico, icon.png, apple-icon.png');
 
 // ---------- 5. Ảnh chia sẻ Facebook/Zalo (Open Graph 1200x630) ----------
 const og = await jpg(join(SRC, 'arches-pool.jpg')).resize(1200, 630, { fit: 'cover', position: 'centre' }).toBuffer();
@@ -131,26 +133,50 @@ await sharp(og)
   .toFile(join(APP, 'opengraph-image.jpg'));
 console.log('✓ app/opengraph-image.jpg');
 
-// ---------- 6. Mặt nạ mép ảnh hero (cạnh trái lượn sóng, tan vào nền) ----------
+// ---------- 6. Mặt nạ mép ảnh hero (cạnh trái lượn sóng sin đều, mép mờ mảnh, mờ nhẹ ở đáy) ----------
 {
-  const W = 1000, H = 1000, amp = 3.2, periods = 1.5, inset = 7, blur = 0.9, bottomFade = 6;
+  const W = 1200, H = 1200;
+  // Vẽ trên khung rộng hơn rồi cắt lại: nếu không, nét mờ bị cắt ở mép canvas → mép trên/phải ảnh mờ ngoài ý muốn
+  const PAD = 0.2 * W;
+  // Thông số giống mẫu 4ChanHomestay: sóng sin đều 1.5 chu kỳ, mép mờ mảnh, chỉ mờ nhẹ ở đáy
+  const amp = 3.6; // biên độ sóng (% chiều rộng)
+  const periods = 1.5;
+  const inset = 7; // vị trí mép trái (% chiều rộng)
+  const blur = 0.9; // độ mờ mép (% kích thước)
+  const bottomFade = 20; // % chiều cao tan dần ở đáy (đường cong ease, không phải tuyến tính → không lộ vệt cắt)
   const pts = [];
-  for (let i = 0; i <= 120; i++) {
-    const t = i / 120;
+  for (let i = 0; i <= 240; i++) {
+    const t = i / 240; // 0 = đáy, 1 = đỉnh
     const x = inset + amp * Math.sin(2 * Math.PI * periods * t + Math.PI / 2);
-    pts.push(`${((x * W) / 100).toFixed(1)},${(((110 - t * 120) * H) / 100).toFixed(1)}`);
+    pts.push(`${((x * W) / 100 + PAD).toFixed(1)},${(((110 - t * 120) * H) / 100 + PAD).toFixed(1)}`);
   }
-  const d = `M${1.15 * W},${-0.1 * H} L${1.15 * W},${1.1 * H} L${pts.join(' L')} Z`;
+  const d = `M${1.3 * W + PAD},${-0.3 * H + PAD} L${1.3 * W + PAD},${1.3 * H + PAD} L${pts.join(' L')} Z`;
   const fadeStart = (100 - bottomFade) / 100;
+  // Nhiều nấc theo smoothstep đảo: đầu vùng giảm rất chậm, giữa nhanh, cuối lại chậm → tan êm vào nền
+  const fadeStops = Array.from({ length: 11 }, (_, i) => {
+    const k = i / 10;
+    const a = 1 - k * k * (3 - 2 * k);
+    return `<stop offset="${(fadeStart + k * (1 - fadeStart)).toFixed(3)}" stop-color="#fff" stop-opacity="${a.toFixed(3)}"/>`;
+  }).join('');
   const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">` +
-    `<defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="${H}">` +
-    `<stop offset="0" stop-color="#fff"/><stop offset="${fadeStart}" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>` +
-    `</linearGradient><filter id="b" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="${(blur * W) / 100}"/></filter></defs>` +
-    `<path d="${d}" fill="url(#g)" filter="url(#b)"/></svg>`;
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W + 2 * PAD}" height="${H + 2 * PAD}">` +
+    `<defs>` +
+    `<linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="${PAD}" x2="0" y2="${H + PAD}">` +
+    `<stop offset="0" stop-color="#fff"/>` +
+    fadeStops +
+    `</linearGradient>` +
+    `<filter id="b" x="-20%" y="-20%" width="140%" height="140%">` +
+    `<feGaussianBlur stdDeviation="${((blur * W) / 100).toFixed(1)}"/>` +
+    `</filter>` +
+    `</defs>` +
+    `<path d="${d}" fill="url(#g)" filter="url(#b)"/>` +
+    `</svg>`;
   mkdirSync(join(PUB, 'masks'), { recursive: true });
-  await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(join(PUB, 'masks/hero-feather.png'));
-  console.log('✓ masks/hero-feather.png');
+  await sharp(Buffer.from(svg))
+    .extract({ left: PAD, top: PAD, width: W, height: H })
+    .png({ compressionLevel: 9 })
+    .toFile(join(PUB, 'masks/hero-feather.png'));
+  console.log('✓ masks/hero-feather.png (sóng sin đều, mép mờ mảnh)');
 }
 
 console.log('\nXong. Ảnh nằm trong public/images/, icon + ảnh OG trong app/.');

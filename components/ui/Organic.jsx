@@ -323,6 +323,24 @@ const DECOR_ROWS = {
     ['blossom', 'left-[70%] bottom-9 w-5', {}],
     ['blossomBranch', 'right-[2%] bottom-1 w-24', { flip: true }],
   ],
+  d: [
+    ['sun', 'left-[4%] bottom-8 w-10', {}],
+    ['leaf', 'left-[13%] bottom-0 w-12', {}],
+    ['blossom', 'left-[29%] bottom-7 w-5', {}],
+    ['sparkles', 'left-[50%] bottom-6 w-14', {}],
+    ['wave', 'right-[25%] bottom-5 w-20', {}],
+    ['ring', 'right-[11%] bottom-2 w-10 animate-drift', {}],
+    ['leaf', 'right-[2.5%] bottom-0 w-14', { flip: true }],
+  ],
+  e: [
+    ['blossomBranch', 'left-[2%] bottom-1 w-24', {}],
+    ['sparkles', 'left-[23%] bottom-7 w-14', {}],
+    ['wave', 'left-[39%] bottom-4 w-16', {}],
+    ['ring', 'left-[55%] bottom-2 w-9 animate-drift', { color: '#7ED8E6' }],
+    ['blossom', 'right-[30%] bottom-8 w-5', {}],
+    ['sun', 'right-[17%] bottom-6 w-9', {}],
+    ['leaf', 'right-[4%] bottom-0 w-14', { flip: true }],
+  ],
 };
 
 export function DecorRow({ variant = 'a', className = '' }) {

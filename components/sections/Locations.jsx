@@ -4,21 +4,31 @@ import { useState } from 'react';
 import Image from 'next/image';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Icon from '@/components/ui/Icon';
-import { DecorRow, Sparkles, Wavelet } from '@/components/ui/Organic';
-import { branches, mapDirectionsUrl, mapEmbedUrl, siteConfig } from '@/data/site';
-import { telHref } from '@/lib/utils';
+import { Blossom, DecorRow, PoolRing, Sparkles, Wavelet } from '@/components/ui/Organic';
+import { branches, mapEmbedUrl } from '@/data/site';
 
 export default function Locations() {
   const [sel, setSel] = useState(branches[0].id);
   const branch = branches.find((b) => b.id === sel) || branches[0];
 
   return (
-    <section id="vi-tri" className="relative w-full pt-16 pb-28 lg:pt-20 lg:pb-36 overflow-hidden bg-white">
-      <Wavelet className="hidden lg:block absolute right-[5%] top-[8%] w-24 opacity-80" />
-      <Sparkles className="hidden lg:block absolute left-[3%] top-[12%] w-16 opacity-70" />
-
+    <section id="vi-tri" className="relative w-full pt-14 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+        {/* Góc phải tiêu đề: ghi chú viết tay + phao bơi, sóng biển */}
+        <div data-reveal="note" data-reveal-delay="250" aria-hidden className="hidden lg:block absolute right-14 xl:right-24 top-0 w-[340px] h-[190px] pointer-events-none">
+          <Sparkles className="absolute left-0 top-2 w-16 opacity-80" />
+          <p className="absolute left-14 top-10 font-script text-[28px] leading-[1.15] text-ink/65 -rotate-[5deg] text-center">
+            Biển gọi tên,
+            <br />
+            The Moon đón ☾
+          </p>
+          <PoolRing className="absolute right-4 top-0 w-14 animate-drift" color="#7ED8E6" />
+          <Wavelet className="absolute right-0 bottom-6 w-28 opacity-80" />
+          <Blossom className="absolute left-10 bottom-4 w-6 opacity-85" />
+        </div>
+
         <SectionHeading
+          reveal="sweep"
           eyebrow="Vị trí & bản đồ"
           title="2 cơ sở,"
           script="Mũi Né & Phan Thiết"
@@ -26,7 +36,7 @@ export default function Locations() {
           className="max-w-2xl"
         />
 
-        <div className="mt-10 grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-8 items-start">
+        <div className="mt-10 grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-8 items-stretch">
           <div className="grid gap-4">
             {branches.map((b, i) => {
               const active = sel === b.id;
@@ -39,7 +49,7 @@ export default function Locations() {
                   onClick={() => setSel(b.id)}
                   aria-pressed={active}
                   className={`group text-left rounded-[26px] p-3 sm:p-3.5 flex gap-4 items-center transition-all duration-300 ring-1 cursor-pointer ${
-                    active ? 'bg-sky ring-moon/40 shadow-[0_18px_36px_-24px_rgba(20,181,217,0.6)]' : 'bg-cream ring-line hover:ring-moon/40 hover:-translate-y-0.5'
+                    active ? 'bg-sky ring-moon/40 shadow-[0_18px_36px_-24px_rgba(20,181,217,0.6)]' : 'bg-white/80 ring-line hover:ring-moon/40 hover:-translate-y-0.5'
                   }`}
                 >
                   <div className="relative w-[108px] h-[124px] sm:w-[140px] sm:h-[136px] shrink-0 rounded-[20px] overflow-hidden">
@@ -81,34 +91,24 @@ export default function Locations() {
             </div>
           </div>
 
-          <div data-reveal="map" data-reveal-delay="200" className="lg:sticky lg:top-24">
-            <div className="relative rounded-[30px] overflow-hidden ring-4 ring-white shadow-[0_24px_50px_-30px_rgba(23,34,44,0.6)] bg-sand">
+          <div data-reveal="map" data-reveal-delay="200" className="lg:flex lg:flex-col">
+            {/* Desktop: bản đồ cao đúng bằng cột thông tin bên trái */}
+            <div className="relative lg:flex-1 rounded-[30px] overflow-hidden ring-4 ring-white shadow-[0_24px_50px_-30px_rgba(23,34,44,0.6)] bg-sand">
               <iframe
                 key={branch.id}
                 title={`Bản đồ ${branch.name}`}
                 src={mapEmbedUrl(branch.mapQuery)}
-                className="block w-full h-[360px] sm:h-[440px] lg:h-[560px] border-0"
+                className="block w-full h-[360px] sm:h-[440px] lg:absolute lg:inset-0 lg:h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
               />
-              <span className="absolute top-4 left-4 rounded-full bg-white/92 backdrop-blur px-3.5 py-1.5 text-[12.5px] font-semibold text-ink shadow inline-flex items-center gap-1.5">
-                <Icon name="map-pin" className="w-4 h-4 text-coral" /> {branch.name}
-              </span>
-            </div>
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <a href={mapDirectionsUrl(branch.mapQuery)} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                <Icon name="directions" className="w-4 h-4" /> Chỉ đường
-              </a>
-              <a href={telHref(siteConfig.hotline)} className="btn btn-outline">
-                <Icon name="phone" className="w-4 h-4" /> {siteConfig.hotline}
-              </a>
             </div>
           </div>
         </div>
       </div>
 
-      <DecorRow variant="c" />
+      <DecorRow variant="a" />
     </section>
   );
 }
